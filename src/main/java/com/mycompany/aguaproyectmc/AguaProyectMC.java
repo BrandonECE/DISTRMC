@@ -21,20 +21,36 @@ public class AguaProyectMC {
         presaLitros = datos.litrosMaxPresa;
         infinityBucle = datos.infinityBucle;
         
-        while(infinityBucle){
-            
-            
-            
-        }
-        
-        ///SIMPLEX
-        LinearObjectiveFunction f = new LinearObjectiveFunction(new double[]{3, 2, 3}, 0); // Objective function: 3x + 2y
+//        while(infinityBucle){
+//            
+//            
+//            
+//        } 
+//                                                                     //Mun    1   |    2   |    3  |   4
+        ///SIMPLEX                                                    //COL  1, 2, 3| 1, 2, 3|1, 2, 3| 1, 2, 3
+        LinearObjectiveFunction f = new LinearObjectiveFunction(new double[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, 0);
 
         // Define constraints
         LinearConstraintSet constraints = new LinearConstraintSet(
                 new LinearConstraint[]{ 
-                        new LinearConstraint(new double[]{1, 1, 2}, Relationship.LEQ, 5), // x + y ≤ 5
-                        new LinearConstraint(new double[]{2, 1, 3}, Relationship.LEQ, 8)  // 2x + y ≤ 8
+                        new LinearConstraint(new double[]{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, Relationship.LEQ, 9),
+                        new LinearConstraint(new double[]{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, Relationship.LEQ, 9),  
+                        new LinearConstraint(new double[]{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}, Relationship.LEQ, 9),
+                        new LinearConstraint(new double[]{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0}, Relationship.LEQ, 9),
+                        new LinearConstraint(new double[]{0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0}, Relationship.LEQ, 9),
+                        new LinearConstraint(new double[]{0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0}, Relationship.LEQ, 9),
+                        new LinearConstraint(new double[]{0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0}, Relationship.LEQ, 9),
+                        new LinearConstraint(new double[]{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0}, Relationship.LEQ, 9),
+                        new LinearConstraint(new double[]{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0}, Relationship.LEQ, 9),
+                        new LinearConstraint(new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}, Relationship.LEQ, 9),
+                        new LinearConstraint(new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}, Relationship.LEQ, 9),
+                        new LinearConstraint(new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, Relationship.LEQ, 9),
+                        new LinearConstraint(new double[]{1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}, Relationship.LEQ, 27),
+                        new LinearConstraint(new double[]{0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0}, Relationship.LEQ, 27),
+                        new LinearConstraint(new double[]{0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0}, Relationship.LEQ, 27),
+                        new LinearConstraint(new double[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1}, Relationship.LEQ, 27),
+                        
+               
                 }
         );
 
@@ -43,9 +59,10 @@ public class AguaProyectMC {
         PointValuePair solution = solver.optimize(new MaxIter(100), f, constraints, GoalType.MAXIMIZE, new NonNegativeConstraint(true));
 
         // Print the results
-        System.out.println("x1 = " + solution.getPoint()[0]);
-        System.out.println("x2 = " + solution.getPoint()[1]);
-        System.out.println("x3 = " + solution.getPoint()[2]);
+        for (int i = 0; i < 12; i++) {
+           System.out.println("x"+(i+1)+" = " + solution.getPoint()[i]);
+        }
+
         System.out.println("Maximum value: " + solution.getValue());
         
     }
